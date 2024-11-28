@@ -23,15 +23,6 @@ class ControllerFCM {
         .then((NotificationSettings permission) {
       if (permission.authorizationStatus == AuthorizationStatus.authorized) {
         firebaseMessaging.subscribeToTopic(topic);
-        /*  firebaseMessaging.getToken().then(
-          (token) {
-            debugPrint('token do dispositivo: $token');
-            _pushNotificationService.sendNotification(
-              deviceToken: token!,
-              message: 'olá mundo!',
-            );
-          },
-        );*/
         debugPrint(
             "permissao concedida: ${permission.authorizationStatus.name}");
       } else {

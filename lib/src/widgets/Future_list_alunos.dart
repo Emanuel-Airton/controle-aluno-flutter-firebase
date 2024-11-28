@@ -19,7 +19,7 @@ class _ListAlunosTurmaState extends State<ListAlunosTurma> {
   Widget buildFuture(String nomeTurma,
       {bool ocultarTrailing = false, String? escolha}) {
     return FutureBuilder(
-      future: Firebaseclasse().listarTurmas(nomeTurma),
+      future: Firebaseclasse().listarAlunosPorTurma(nomeTurma),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return _buildLoadingIndicator();

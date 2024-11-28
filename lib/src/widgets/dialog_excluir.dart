@@ -31,16 +31,20 @@ class Dialog_excluir {
                               Theme.of(context).colorScheme.primary,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15))),
-                      onPressed: () {
-                        Firebaseclasse().excluir(id);
-                        print("id: $id");
-                        Navigator.pop(context);
-                        // snackBarDelete;
+                      onPressed: () async {
+                        try {
+                          await Firebaseclasse().excluirRegistroDeSaida(id);
 
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            backgroundColor: corSecundaria,
-                            content:
-                                const Text("Registro excluido com sucesso!")));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: corSecundaria,
+                              content: const Text(
+                                  "Registro excluido com sucesso!")));
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())),
+                          );
+                        }
+                        Navigator.pop(context);
                       },
                       label: const Text("apagar",
                           style: TextStyle(color: Colors.white, fontSize: 12)),

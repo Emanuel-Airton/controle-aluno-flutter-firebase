@@ -16,50 +16,6 @@ class TelaPortaria extends StatefulWidget {
 class _TelaPortariaState extends State<TelaPortaria> {
   List<String> list = ["sair"];
   String userPortaria = "portaria";
-/*
-  void _configureFCMListeners() async {
-    await FirebaseMessaging.instance
-        .requestPermission(
-            alert: true, sound: true, badge: true, provisional: false)
-        .then((permissao) {
-      if (permissao.authorizationStatus == AuthorizationStatus.authorized) {
-        // print("Permissão concedida ao usuario: ${permissao.authorizationStatus}");
-        FirebaseMessaging.instance.subscribeToTopic('topic_portaria');
-      } else {
-        print("permissão negada: " + permissao.authorizationStatus.toString());
-      }
-      return permissao;
-    });
-    // Manipula mensagens de dados recebidas quando o aplicativo está em primeiro plano
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      // Map<String, dynamic> map = message.data;
-      //String data = map["message"];
-      _lidarComMensagem(message);
-      //  print("Mensagem de dados recebida: ${message.data} ");
-      // Extrai dados e executar ações personalizadas
-    });
-    // Trata a mensagem de dados recebida quando o aplicativo está em segundo plano ou finalizado
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      //print("Data message open: ${message.data} ");
-      _lidarComMensagem(message);
-    });
-
-    //Se o aplicativo for aberto a partir de um estado finalizado, este método retornará um Future contendo um RemoteMessage
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
-      if (message != null) {
-        Dialog_fcm(remoteMessage: message);
-        //_lidarComMensagem(message);
-      }
-    });
-  }
-
-  _lidarComMensagem(RemoteMessage message) {
-    Map<String, dynamic> map = message.data;
-    if (map.isNotEmpty) {
-      Dialog_fcm(remoteMessage: message);
-      // dialog(context, message);
-    }
-  }*/
 
   dialog(BuildContext context, RemoteMessage remoteMessage) {
     Map<String, dynamic> map = remoteMessage.data;
@@ -84,10 +40,11 @@ class _TelaPortariaState extends State<TelaPortaria> {
     String? nome = user.getString('username');
     //  print(string);
     if (string == "sair") {
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => TelaInicial(valorRecebido: valor)));
+              builder: (context) => TelaInicial(valorRecebido: valor)),
+          (Route route) => false);
     }
   }
 

@@ -158,7 +158,7 @@ class _SaidaStreamState extends State<SaidaStream> {
                 : IconButton(
                     color: const Color.fromARGB(255, 0, 0, 128),
                     onPressed: () {
-                      print("numero do id: ${item.id}");
+                      debugPrint("numero do id: ${item.id}");
                       Dialog_excluir().dialogExcluir(context, id: item.id);
                     },
                     icon: const Icon(Icons.delete),

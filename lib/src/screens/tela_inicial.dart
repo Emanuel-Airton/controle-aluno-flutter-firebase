@@ -49,7 +49,7 @@ class _TelaInicialState extends State<TelaInicial>
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => HomePage(usuario: nomeUsuario)),
-        ModalRoute.withName('/'),
+        (Route route) => false,
       );
     } else if (nomeUsuario == 'portaria') {
       Navigator.pushAndRemoveUntil(

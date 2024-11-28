@@ -1,4 +1,4 @@
-import 'dart:convert';
+/*import 'dart:convert';
 import 'package:controle_saida_aluno/src/controllers/controllerAPI.dart';
 import 'package:controle_saida_aluno/src/models/saida.dart';
 import '../models/clould_mensaging.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class Cloud_menssaging {
   ApiConsumer apiConsumer = ApiConsumer();
 
-  enviarNotificacaoPush(Saida saida) async {
+   enviarNotificacaoPush(Saida saida) async {
     dotenv.load(fileName: '.env');
     final apiKey = dotenv.env['API_KEY'];
     String mensagemSaida = ClouldMensagingModel.semDados().ToString(saida);
@@ -44,4 +44,4 @@ class Cloud_menssaging {
         */
         );
   }
-}
+}*/

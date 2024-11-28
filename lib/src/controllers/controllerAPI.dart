@@ -7,7 +7,6 @@ class ApiConsumer {
     final response = await http.post(url, headers: map, body: bodyObj);
     if (response.statusCode == 200) {
       debugPrint("Notificação enviada com sucesso.");
-      //    print(response.body);
     } else {
       debugPrint("falha ao enviar notificação:${response.statusCode}");
     }

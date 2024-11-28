@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:controle_saida_aluno/src/controllers/push_notification.dart';
 import 'package:controle_saida_aluno/src/models/alunos.dart';
 import 'package:controle_saida_aluno/src/models/saida.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
@@ -24,27 +25,27 @@ class Firebaseclasse {
         .set(anotacao.map())
         .then((value) {
       //  Cloud_menssaging().enviarNotificacaoPush(anotacao);
-      PushNotificationService().enviarNotificacao(anotacao);
+      PushNotificationService().sendNotification(anotacao);
     }).catchError((Error) {
       ArgumentError("Erro ao cadastrar$Error");
     });
   }
 
-  excluir(var id) async {
-    /* await db.collection(colecaoSaida).doc(id).delete().then(
-        (doc) => print("Documento apagado com sucesso"),
-        onError: (e) => ArgumentError("Erro ao excluir documento $e"));
- */
+  Future<void> excluirRegistroDeSaida(var id) async {
     try {
-      await db.collection(colecaoSaida).doc(id).delete();
-      print("Documento apagado com sucesso");
-    } catch (error) {
-      print("erro: $error");
+      await db
+          .collection(colecaoSaida)
+          .doc(id)
+          .delete()
+          .then((value) => debugPrint("Documento apagado com sucesso"));
+    } on FirebaseException catch (e) {
+      throw Exception("Erro desconhecido: $e");
     }
   }
 
   String ultima = "";
-  Future listar() async {
+  //retorna o ultimo documento de saida de aluno de acordo com a ordem do firebase
+  Future listarSaidaDoUltimoAlunoFirebase() async {
     QuerySnapshot querySnapshot = await db.collection(colecaoSaida).get();
     List list = [];
     for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
@@ -53,13 +54,11 @@ class Firebaseclasse {
       list.add(map["nome"]);
       ultima = list.last;
       list.clear();
-      //print("lista:" + list.toString());
     }
-//    print("ultimo item da lista: $ultima");
     return ultima;
   }
 
-  Future listarTurmas(String nomeTurma) async {
+  Future listarAlunosPorTurma(String nomeTurma) async {
     List<Alunos> list = [];
     QuerySnapshot querySnapshot = await db
         .collection(colecaoTurmas)
@@ -78,8 +77,9 @@ class Firebaseclasse {
     return list;
   }
 
-  atualizarData() async {
-    /* QuerySnapshot querySnapshot = await db.collection(colecaoSaida).get();
+  //metodo que atualiza todos os registros de saida no firebase e converte o campo data de String para Timestemp
+  atualizarStringParaTimesTemp() async {
+    QuerySnapshot querySnapshot = await db.collection(colecaoSaida).get();
     List list = [];
     Timestamp timestamp;
     for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
@@ -93,27 +93,24 @@ class Firebaseclasse {
         convert = convert.add(const Duration(hours: 3));
 
         timestamp = Timestamp.fromDate(convert);
-        String mostrarDataFormatada = dateFormat.format(convert);
-
         list.add({mapa["nome"], timestamp.toDate()});
-        //print(list.toString());
         await documentSnapshot.reference.update({"data": timestamp});
       } catch (e) {
-        print("Invalid format data: $e");
+        debugPrint("Invalid format data: $e");
         return null;
       }
-
-      //  await db.collection(colecaoSaida).doc().update({"data": timestamp});
+      await db.collection(colecaoSaida).doc().update({"data": timestamp});
     }
-    //
-    // list.clear();*/
+    list.clear();
+  }
+
+  atualizarData() async {
     DocumentSnapshot documentSnapshot = await db
         .collection(colecaoSaida)
         .doc("0b8dfef0-890f-1fbc-b0c4-094fc1b0bd06")
         .get();
 
     Map map = documentSnapshot.data() as Map;
-    // print(map["data"].toString());
     DateFormat dateFormat = DateFormat("dd/MM/yyyy").add_Hm();
     DateTime dateTime = dateFormat.parse(map["data"]);
     dateTime = dateTime.add(const Duration(hours: 3));
@@ -193,7 +190,6 @@ class Firebaseclasse {
           return dataB.compareTo(dataA);
         },
       );
-
       // Pegue os primeiros três itens ou menos se a lista for menor que 3
       int primeirosTresItens = list.length < 3 ? list.length : 3;
       for (int i = 0; i < primeirosTresItens; i++) {

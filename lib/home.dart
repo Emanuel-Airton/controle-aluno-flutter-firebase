@@ -1,4 +1,3 @@
-import 'package:controle_saida_aluno/src/firebase/firebase.dart';
 import 'package:controle_saida_aluno/src/screens/tela_dados.dart';
 import 'package:controle_saida_aluno/src/screens/tela_inicial.dart';
 import 'package:controle_saida_aluno/src/screens/tela_saidas.dart';
@@ -29,7 +28,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // TODO: implement initState
     _tabController = TabController(length: 3, vsync: this);
     //print("usuario logado: " + widget.usuario!);
-    Firebaseclasse().listar();
     // ControllerFCM(context);
     //print("aaaaaaaaaaaaaa: " + Firebaseclasse().ultima);
     super.initState();
@@ -41,11 +39,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     user.setString('username', valor);
     String? nome = user.getString('username');
     if (string == "sair") {
-      print('nome do usuario ao apertar o botao sair: $nome');
-      Navigator.pushReplacement(
+      debugPrint('nome do usuario ao apertar o botao sair: $nome');
+      Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => TelaInicial(valorRecebido: valor)));
+              builder: (context) => TelaInicial(valorRecebido: valor)),
+          (Route route) => false);
     }
   }
 
