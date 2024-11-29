@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:controle_saida_aluno/src/components/ElevatedIconButtom.dart';
+import 'package:controle_saida_aluno/src/components/snakbar.dart';
 import 'package:controle_saida_aluno/src/firebase/firebase.dart';
 import 'package:controle_saida_aluno/src/models/alunos.dart';
 import 'package:controle_saida_aluno/src/models/saida.dart';
+import 'package:controle_saida_aluno/src/utils/list_turmas.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -14,39 +17,8 @@ class Dialog_cadastro {
 
   List<String> nova = [];
   String primeiraTurma = "";
-  List<String> turmasM = [
-    "6º A matutino",
-    "6º B matutino",
-    "7º A matutino",
-    "7º B matutino",
-    "8º A matutino",
-    "8º B matutino",
-    "9º A matutino",
-    "9º B matutino",
-    "9º C matutino"
-  ];
-  String primeiraM = "6º A matutino";
-  List<String> turmasV = [
-    "6º A vespertino",
-    "6º B vespertino",
-    "6º C vespertino",
-    "7º A vespertino",
-    "7º B vespertino",
-    "7º C vespertino",
-    "8º A vespertino",
-    "8º B vespertino",
-    "9º A vespertino"
-  ];
-  String primeiraV = "6º A vespertino";
-
-  var primeiroMotivo = "dor de cabeça";
-
-  List<String> autorizacao = [
-    "Sandrileuza",
-    "Edeezio",
-    "Valdicelia",
-  ];
-  String primeiraAut = "Rosa";
+  ListTurmas listTurmas = ListTurmas();
+  String primeiraAutorizacao = "Sandrileuza";
   String telefone = "";
 
   //List<Anotacao> lista = Firebaseclasse().listar();
@@ -68,9 +40,9 @@ class Dialog_cadastro {
       primeiraTurma = nomeTurma;
       telefone = alunos.telefone;
       if (escolha == "Matutino") {
-        nova = turmasM;
+        nova = listTurmas.turmasMatutino;
       } else {
-        nova = turmasV;
+        nova = listTurmas.turmasVespertino;
       }
     }
     String texto = "Nova saída de aluno";
@@ -184,15 +156,16 @@ class Dialog_cadastro {
                                     return null;
                                   },
                                   //value: primeiraAut,
-                                  items: autorizacao.map((String item) {
+                                  items:
+                                      listTurmas.autorizacao.map((String item) {
                                     return DropdownMenuItem(
                                         value: item, child: Text(item));
                                   }).toList(),
                                   onChanged: (String? itemSelecionado) {
                                     setState(() {
-                                      primeiraAut = itemSelecionado!;
+                                      primeiraAutorizacao = itemSelecionado!;
 
-                                      controller5.text = primeiraAut;
+                                      controller5.text = primeiraAutorizacao;
                                       //   print("controller 5: ${controller5.text}");
                                     });
                                   },
@@ -228,65 +201,38 @@ class Dialog_cadastro {
               Column(
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Timestamp timeNow = Timestamp.now();
-
-                        Saida anotacao = Saida(
-                            alunos?.nome,
-                            alunos?.telefone,
-                            controller3.text,
-                            controller4.text,
-                            controller5.text,
-                            //"10/04/2024 10:35"
-                            timeNow);
-                        Firebaseclasse().inserir(anotacao);
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            backgroundColor: corPadrao,
-                            content: Text(
-                              "Aluno(a) ${controller1.text} liberado com sucesso!",
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            )));
-                        Navigator.pop(context);
-                        limpar();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(40),
-                        backgroundColor: corSecundaria,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15))),
-                    label: const Text(
-                      "Salvar",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    icon: const Icon(
-                      Icons.save,
-                      color: Colors.white,
-                    ),
-                  ),
-                  ElevatedButton.icon(
-                      onPressed: () {
-                        //  print(dat.toString());
-                        Navigator.pop(context);
-                        limpar();
+                  ElevatedIconButtom(
+                      color: corSecundaria,
+                      iconData: Icons.save,
+                      onpressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Timestamp timeNow = Timestamp.now();
+                          Saida anotacao = Saida(
+                              alunos?.nome,
+                              alunos?.telefone,
+                              controller3.text,
+                              controller4.text,
+                              controller5.text,
+                              //"10/04/2024 10:35"
+                              timeNow);
+                          Firebaseclasse().inserir(anotacao);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBarWidget().snackbar(context, corPadrao,
+                                  'Aluno ${controller1.text} liberado com sucesso'));
+                          Navigator.pop(context);
+                          limpar();
+                        }
                       },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(40),
-                          backgroundColor: corPadrao,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15))),
-                      label: const Text(
-                        "cancelar",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      icon: const Icon(
-                        Icons.cancel,
-                        color: Colors.white,
-                      )),
+                      texto: 'Salvar'),
+                  ElevatedIconButtom(
+                    color: corPadrao,
+                    iconData: Icons.cancel,
+                    texto: 'Cancelar',
+                    onpressed: () {
+                      Navigator.pop(context);
+                      limpar();
+                    },
+                  )
                 ],
               )
             ],
@@ -299,8 +245,8 @@ class Dialog_cadastro {
     escolhaUsuario = "";
     escolhaUsuario2 = "";
     nova = [];
-    primeiroMotivo = "dor de cabeça";
-    primeiraAut = "Rosa";
+    listTurmas.primeiroMotivo = "dor de cabeça";
+    primeiraAutorizacao = "Sandrileuza";
     controller5.clear();
     controller6.clear();
   }

@@ -1,3 +1,4 @@
+import 'package:controle_saida_aluno/src/utils/list_turmas.dart';
 import 'package:controle_saida_aluno/src/widgets/Future_list_alunos.dart';
 import 'package:controle_saida_aluno/src/widgets/dialog_cadastro.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -24,9 +25,10 @@ class _TelaTurmasState extends State<TelaTurmas> {
     }
   }
 
+  Dialog_cadastro dialog_cadastro = Dialog_cadastro();
+  ListTurmas listTurmas = ListTurmas();
   int currentPageCarousel = 0;
   String nome = "sem nome";
-
   List _nova = [];
   String _primeiraTurma = "";
   String _nomeTurma = "";
@@ -71,9 +73,9 @@ class _TelaTurmasState extends State<TelaTurmas> {
                             onChanged: (value) {
                               setState(() {
                                 _escolha = value!;
-                                _primeiraTurma = Dialog_cadastro().primeiraM;
+                                _primeiraTurma = listTurmas.primeiraM;
                                 _nomeTurma = _primeiraTurma;
-                                _nova = Dialog_cadastro().turmasM;
+                                _nova = listTurmas.turmasMatutino;
                               });
                             },
                           ),
@@ -90,9 +92,10 @@ class _TelaTurmasState extends State<TelaTurmas> {
                             onChanged: (value) {
                               setState(() {
                                 _escolha = value!;
-                                _primeiraTurma = Dialog_cadastro().primeiraV;
+                                _primeiraTurma =
+                                    listTurmas.primeiraTurmaVespertino;
                                 _nomeTurma = _primeiraTurma;
-                                _nova = Dialog_cadastro().turmasV;
+                                _nova = listTurmas.turmasVespertino;
                               });
                             },
                           ),
@@ -116,9 +119,9 @@ class _TelaTurmasState extends State<TelaTurmas> {
                               onChanged: (value) {
                                 setState(() {
                                   _escolha = value!;
-                                  _primeiraTurma = Dialog_cadastro().primeiraM;
+                                  _primeiraTurma = listTurmas.primeiraM;
                                   _nomeTurma = _primeiraTurma;
-                                  _nova = Dialog_cadastro().turmasM;
+                                  _nova = listTurmas.turmasMatutino;
                                 });
                               },
                             ),
@@ -137,9 +140,10 @@ class _TelaTurmasState extends State<TelaTurmas> {
                               onChanged: (value) {
                                 setState(() {
                                   _escolha = value!;
-                                  _primeiraTurma = Dialog_cadastro().primeiraV;
+                                  _primeiraTurma =
+                                      listTurmas.primeiraTurmaVespertino;
                                   _nomeTurma = _primeiraTurma;
-                                  _nova = Dialog_cadastro().turmasV;
+                                  _nova = listTurmas.turmasVespertino;
                                 });
                               },
                             ),

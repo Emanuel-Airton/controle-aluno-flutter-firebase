@@ -1,3 +1,4 @@
+import 'package:controle_saida_aluno/src/components/ElevatedIconButtom.dart';
 import 'package:controle_saida_aluno/src/models/alunos.dart';
 import 'package:controle_saida_aluno/src/utils/urlLauncherService%20.dart';
 import 'package:flutter/material.dart';
@@ -116,43 +117,18 @@ class Dialog_contato {
                 const SizedBox(
                   height: 10,
                 ),
-                ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        minimumSize: const Size.fromHeight(50),
-                        backgroundColor: corPadrao),
-                    icon: const Icon(
-                      Icons.phone,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      UrlLauncherService().fazerLigacao(alunos.telefone);
-                    },
-                    label: const Text(
-                      "Ligar",
-                      style: TextStyle(color: Colors.white),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: ElevatedButton.icon(
-                      icon: const Icon(
-                        SimpleIcons.whatsapp,
-                        color: Colors.white,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          minimumSize: const Size.fromHeight(50),
-                          backgroundColor: corSecundaria),
-                      // backgroundColor: MaterialStatePropertyAll(Colors.green)
-                      onPressed: () {
-                        UrlLauncherService()
-                            .enviarMensagem(alunos.telefone, alunos.nome);
-                      },
-                      label: const Text("WhatsApp",
-                          style: TextStyle(color: Colors.white))),
-                )
+                ElevatedIconButtom(
+                    color: corPadrao,
+                    iconData: Icons.phone,
+                    texto: 'Ligar',
+                    onpressed: () =>
+                        UrlLauncherService().fazerLigacao(alunos.telefone)),
+                ElevatedIconButtom(
+                    color: corSecundaria,
+                    iconData: SimpleIcons.whatsapp,
+                    texto: 'WhatsApp',
+                    onpressed: () => UrlLauncherService()
+                        .enviarMensagem(alunos.telefone, alunos.nome))
               ],
             ),
           );

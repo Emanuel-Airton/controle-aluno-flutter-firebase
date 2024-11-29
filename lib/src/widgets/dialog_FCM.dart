@@ -1,3 +1,4 @@
+import 'package:controle_saida_aluno/src/components/ElevatedIconButtom.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -56,26 +57,11 @@ class Dialog_fcm {
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    backgroundColor: corSecundaria,
-                    minimumSize: const Size.fromHeight(50),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "ok, fechar",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      Icon(Icons.close, color: Colors.white),
-                    ],
-                  ),
+                child: ElevatedIconButtom(
+                  color: corSecundaria,
+                  iconData: Icons.close,
+                  texto: 'Ok, fechar',
+                  onpressed: () => Navigator.pop(context),
                 ),
               ),
             ),

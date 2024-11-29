@@ -1,3 +1,4 @@
+import 'package:controle_saida_aluno/src/components/ElevatedIconButtom.dart';
 import 'package:controle_saida_aluno/src/models/saida.dart';
 import 'package:controle_saida_aluno/src/utils/urlLauncherService%20.dart';
 import 'package:flutter/material.dart';
@@ -155,54 +156,24 @@ class Dialog_list {
                   children: [
                     usuario == "portaria"
                         ? Container()
-                        : ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                backgroundColor: corPadrao,
-                                minimumSize: const Size.fromHeight(50)),
-                            onPressed: () {
+                        : ElevatedIconButtom(
+                            color: corPadrao,
+                            texto: 'Informar responsável',
+                            iconData: SimpleIcons.whatsapp,
+                            onpressed: () {
                               UrlLauncherService()
                                   .enviarNotificacaoResponsavel(saida);
                               Navigator.pop(context);
                             },
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right: 5),
-                                  child: Text(
-                                    "Informar o responsável",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                                Icon(
-                                  SimpleIcons.whatsapp,
-                                  color: Colors.white,
-                                )
-                              ],
-                            )),
+                          ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)),
-                              backgroundColor: corSecundaria,
-                              minimumSize: const Size.fromHeight(50)),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "ok, fechar",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Icon(Icons.close, color: Colors.white)
-                            ],
-                          )),
+                      child: ElevatedIconButtom(
+                        color: corSecundaria,
+                        texto: 'Ok, fechar',
+                        iconData: Icons.close,
+                        onpressed: () => Navigator.pop(context),
+                      ),
                     ),
                   ],
                 ),

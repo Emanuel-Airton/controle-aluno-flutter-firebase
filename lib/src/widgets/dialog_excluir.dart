@@ -1,3 +1,5 @@
+import 'package:controle_saida_aluno/src/components/ElevatedIconButtom.dart';
+import 'package:controle_saida_aluno/src/components/snakbar.dart';
 import 'package:controle_saida_aluno/src/firebase/firebase.dart';
 import 'package:flutter/material.dart';
 
@@ -23,52 +25,31 @@ class Dialog_excluir {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 5.0),
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(50),
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15))),
-                      onPressed: () async {
-                        try {
-                          await Firebaseclasse().excluirRegistroDeSaida(id);
-
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              backgroundColor: corSecundaria,
-                              content: const Text(
-                                  "Registro excluido com sucesso!")));
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(e.toString())),
-                          );
-                        }
-                        Navigator.pop(context);
-                      },
-                      label: const Text("apagar",
-                          style: TextStyle(color: Colors.white, fontSize: 12)),
-                      icon: const Icon(Icons.delete, color: Colors.white),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(50),
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15))),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      label: const Text(
-                        "cancelar",
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                      ),
-                      icon: const Icon(Icons.cancel, color: Colors.white),
-                    ),
+                      padding: const EdgeInsets.only(right: 5.0),
+                      child: ElevatedIconButtom(
+                        color: Theme.of(context).colorScheme.primary,
+                        iconData: Icons.delete,
+                        texto: 'Apagar',
+                        onpressed: () async {
+                          try {
+                            await Firebaseclasse().excluirRegistroDeSaida(id);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBarWidget().snackbar(context, corSecundaria,
+                                  'Registro excluido com sucesso!'),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(e.toString())),
+                            );
+                          }
+                          Navigator.pop(context);
+                        },
+                      )),
+                  ElevatedIconButtom(
+                    color: Theme.of(context).colorScheme.secondary,
+                    iconData: Icons.cancel,
+                    texto: 'cancelar',
+                    onpressed: () => Navigator.pop(context),
                   ),
                 ],
               )
