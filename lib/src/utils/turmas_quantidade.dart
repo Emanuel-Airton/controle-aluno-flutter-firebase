@@ -57,7 +57,6 @@ class TurmasPage extends StatelessWidget {
 
               Map<String, int> quantidadeAlunos =
                   snapshot.data as Map<String, int>;
-
               return ListView.builder(
                 itemCount: quantidadeAlunos.length,
                 itemBuilder: (context, index) {
@@ -80,24 +79,13 @@ class TurmasPage extends StatelessWidget {
   Future<Map<String, int>> calcularQuantidadeAlunosPorTurno(
       List<Turma> turmas) async {
     Map<String, int> quantidadePorTurno = {};
-
     for (var turma in turmas) {
-      //  print(turma.nome);
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('turmas')
           .doc(turma.id)
           .collection('alunos')
           .get();
-
       int quantidadeAlunosTurma = querySnapshot.docs.length;
-      //  print(quantidadeAlunosTurma.toString());
-      //  List<Aluno> list = [];
-      /*   querySnapshot.docs.forEach((element) {
-        list.clear();
-        list.add(Aluno(nome: element["nome"]));
-      });*/
-
-      // print(querySnapshot.docs.length);
       quantidadePorTurno.update(
           turma.turno, (value) => value + quantidadeAlunosTurma,
           ifAbsent: () => quantidadeAlunosTurma);

@@ -24,12 +24,12 @@ class _LoginState extends State<Login> {
   Future<void> login() async {
     if (nomeUsuario == userDirecao) {
       navigateToHomePage();
-      print("usuario: $nomeUsuario");
+      debugPrint("usuario: $nomeUsuario");
     } else if (nomeUsuario == userPortaria) {
       navigateToPortariaPage();
-      print("usuario: $nomeUsuario");
+      debugPrint("usuario: $nomeUsuario");
     } else if (nomeUsuario == userSemValor) {
-      print("nenhum usuario selecionado ainda!");
+      debugPrint("nenhum usuario selecionado ainda!");
     }
   }
 

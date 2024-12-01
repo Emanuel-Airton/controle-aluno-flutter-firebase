@@ -2,7 +2,6 @@ import 'package:controle_saida_aluno/src/models/alunos.dart';
 import 'package:controle_saida_aluno/src/models/turmas.dart';
 import 'package:controle_saida_aluno/src/screens/pdf_alunos.dart';
 import 'package:controle_saida_aluno/src/utils/list_alunos_state.dart';
-import 'package:controle_saida_aluno/src/widgets/Future_list_alunos.dart';
 import 'package:flutter/material.dart';
 
 class AlunosTurma extends StatefulWidget {
@@ -39,7 +38,7 @@ class _AlunosTurmaState extends State<AlunosTurma> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Text(
-            '$turma',
+            turma,
             style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold),
           ),
@@ -60,10 +59,7 @@ class _AlunosTurmaState extends State<AlunosTurma> {
                 ),
               ),
               padding: const EdgeInsets.all(5),
-              child: SingleChildScrollView(child: Container()
-                  //ListAlunosTurmas()
-                  //  .buildFuture(widget.doc, ocultarTrailing: true),
-                  )),
+              child: SingleChildScrollView(child: Container())),
         ));
   }
 }

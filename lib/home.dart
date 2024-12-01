@@ -27,9 +27,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     _tabController = TabController(length: 3, vsync: this);
-    //print("usuario logado: " + widget.usuario!);
-    // ControllerFCM(context);
-    //print("aaaaaaaaaaaaaa: " + Firebaseclasse().ultima);
     super.initState();
   }
 
