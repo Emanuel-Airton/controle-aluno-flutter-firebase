@@ -2,6 +2,7 @@ import 'package:controle_saida_aluno/src/models/alunos.dart';
 import 'package:controle_saida_aluno/src/models/turmas.dart';
 import 'package:controle_saida_aluno/src/screens/pdf_alunos.dart';
 import 'package:controle_saida_aluno/src/utils/list_alunos_state.dart';
+import 'package:controle_saida_aluno/src/widgets/Future_list_alunos.dart';
 import 'package:flutter/material.dart';
 
 class AlunosTurma extends StatefulWidget {
@@ -43,6 +44,13 @@ class _AlunosTurmaState extends State<AlunosTurma> {
                 color: Colors.white, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.white,
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -59,7 +67,11 @@ class _AlunosTurmaState extends State<AlunosTurma> {
                 ),
               ),
               padding: const EdgeInsets.all(5),
-              child: SingleChildScrollView(child: Container())),
+              child: ListAlunosTurma(
+                escolha: '',
+                nomeTurma: turma,
+                ocultarTrailing: true,
+              )),
         ));
   }
 }

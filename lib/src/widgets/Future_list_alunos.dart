@@ -9,15 +9,19 @@ import 'package:provider/provider.dart';
 class ListAlunosTurma extends StatefulWidget {
   late String nomeTurma;
   late String escolha;
-  ListAlunosTurma({super.key, required this.nomeTurma, required this.escolha});
+  late bool ocultarTrailing;
+  ListAlunosTurma(
+      {super.key,
+      required this.nomeTurma,
+      required this.escolha,
+      required this.ocultarTrailing});
 
   @override
   State<ListAlunosTurma> createState() => _ListAlunosTurmaState();
 }
 
 class _ListAlunosTurmaState extends State<ListAlunosTurma> {
-  Widget buildFuture(String nomeTurma,
-      {bool ocultarTrailing = false, String? escolha}) {
+  Widget buildFuture(String nomeTurma, {String? escolha}) {
     return FutureBuilder(
       future: Firebaseclasse().listarAlunosPorTurma(nomeTurma),
       builder: (context, snapshot) {
@@ -34,7 +38,7 @@ class _ListAlunosTurmaState extends State<ListAlunosTurma> {
         });
 
         return _buildAlunosList(context, snapshot.data, nomeTurma,
-            ocultarTrailing, escolha ?? 'nulo');
+            widget.ocultarTrailing, escolha ?? 'nulo');
       },
     );
   }

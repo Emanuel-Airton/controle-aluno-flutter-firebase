@@ -35,7 +35,7 @@ class Dialog_cadastro {
     //String nomeAluno = "Nome do aluno";
     if (alunos != null && escolha != null && nomeTurma != null) {
       controller1.text = alunos.nome;
-      escolhaUsuario = escolha;
+      //  escolhaUsuario = escolha;
       controller3.text = nomeTurma;
       primeiraTurma = nomeTurma;
       telefone = alunos.telefone;
@@ -242,7 +242,7 @@ class Dialog_cadastro {
 
   limpar() {
     controller1.clear();
-    escolhaUsuario = "";
+    //escolhaUsuario = "";
     escolhaUsuario2 = "";
     nova = [];
     listTurmas.primeiroMotivo = "dor de cabeça";

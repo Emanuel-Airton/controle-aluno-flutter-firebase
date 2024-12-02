@@ -32,7 +32,7 @@ class _TelaTurmasState extends State<TelaTurmas> {
   List _nova = [];
   String _primeiraTurma = "";
   String _nomeTurma = "";
-  String _escolha = "";
+  String _escolha = '';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -194,8 +194,11 @@ class _TelaTurmasState extends State<TelaTurmas> {
               : Expanded(
                   child: Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
-                  child:
-                      ListAlunosTurma(nomeTurma: _nomeTurma, escolha: _escolha),
+                  child: ListAlunosTurma(
+                    nomeTurma: _nomeTurma,
+                    escolha: _escolha,
+                    ocultarTrailing: false,
+                  ),
                 )),
 
           // child: ListAlunosTurma(nomeTurma: _nomeTurma, escolha: _escolha))
