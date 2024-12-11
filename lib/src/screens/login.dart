@@ -22,14 +22,15 @@ class _LoginState extends State<Login> {
   static const String userPortaria = "portaria";
 
   Future<void> login() async {
-    if (nomeUsuario == userDirecao) {
-      navigateToHomePage();
-      debugPrint("usuario: $nomeUsuario");
-    } else if (nomeUsuario == userPortaria) {
-      navigateToPortariaPage();
-      debugPrint("usuario: $nomeUsuario");
+    final userActions = {
+      userDirecao: navigateToHomePage,
+      userPortaria: navigateToPortariaPage,
+    };
+
+    if (userActions.containsKey(nomeUsuario)) {
+      userActions[nomeUsuario]?.call();
     } else if (nomeUsuario == userSemValor) {
-      debugPrint("nenhum usuario selecionado ainda!");
+      nomeUsuario = userSemValor;
     }
   }
 
@@ -72,8 +73,6 @@ class _LoginState extends State<Login> {
     // TODO: implement initState
     loadPreferences();
     listaRecebeUsuarios = widget.listaUsuarios!;
-    //print(listaRecebeUsuarios);
-    // listar();
     super.initState();
   }
 
@@ -169,7 +168,7 @@ class _LoginState extends State<Login> {
                                 final pref =
                                     await SharedPreferences.getInstance();
                                 pref.setString('username', nomeUsuario!);
-                                login();
+                                await login();
                               }
                             },
                             child: const Text(
